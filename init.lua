@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true 
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -178,8 +178,12 @@ vim.opt.expandtab = true
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- use <C-n> to open and close the file tree
-vim.keymap.set('n', '<C-n>', '<cmd>Ex<CR>')
+-- use <C-n> to open and close the Neo-tree 
+vim.keymap.set('n', '<C-n>', '<cmd>Neotree toggle<CR>', { desc = 'Toggle Neo-tree' })
+
+
+-- disable netrw
+vim.g.loaded_netrw = 1
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
