@@ -1,7 +1,7 @@
 return {
   -- NeoTree
   {
-   "nvim-neo-tree/neo-tree.nvim",
+    "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -11,7 +11,10 @@ return {
     },
     lazy = false, -- neo-tree will lazily load itself
     opts = {
-      -- fill any relevant options here
     },
-  }
+  },
+  vim.cmd [[ hi NeoTreeNormal guibg=NONE ctermbg=NONE
+  hi NeoTreeNormalNC guibg=NONE ctermbg=NONE
+  hi NeoTreeEndOfBuffer guibg=NONE ctermbg=NONE
+]]
 }

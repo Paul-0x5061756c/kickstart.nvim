@@ -716,14 +716,14 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
-      volar = {
-          filetypes = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'vue' },
-          init_options = {
-            vue = {
-              hybridMode = false
-            }
-          }
-        },
+      -- volar = {
+      --     filetypes = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'vue' },
+      --     init_options = {
+      --       vue = {
+      --         hybridMode = false
+      --       }
+      --     }
+      --   },
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
@@ -949,6 +949,14 @@ require('lazy').setup({
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
+
+      -- remove background so that the background is transparent
+      vim.cmd [[
+        hi Normal guibg=NONE ctermbg=NONE
+        hi NormalNC guibg=NONE ctermbg=NONE
+        hi EndOfBuffer guibg=NONE ctermbg=NONE
+      ]]
+
     end,
   },
   -- Highlight todo, notes, etc in comments
