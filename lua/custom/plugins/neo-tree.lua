@@ -12,9 +12,11 @@ return {
     lazy = false, -- neo-tree will lazily load itself
     opts = {
     },
+    config = function(_, opts)
+      require("neo-tree").setup(opts)
+      vim.cmd([[ hi NeoTreeNormal guibg=NONE ]])
+      vim.cmd([[ hi NeoTreeNormalNC guibg=NONE ]])
+      vim.cmd([[ hi NeoTreeWinSeparator guibg=NONE ]])
+    end,
   },
-  vim.cmd [[ hi NeoTreeNormal guibg=NONE ctermbg=NONE
-  hi NeoTreeNormalNC guibg=NONE ctermbg=NONE
-  hi NeoTreeEndOfBuffer guibg=NONE ctermbg=NONE
-]]
 }
