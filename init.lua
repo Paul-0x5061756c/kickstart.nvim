@@ -502,21 +502,6 @@ require('lazy').setup({
       'saghen/blink.cmp',
     },
     config = function()
-      local cmp = require 'cmp'
-      cmp.setup({
-        mapping = cmp.mapping.preset.insert({
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
-          ["<C-j>"] = cmp.mapping.select_next_item(),
-          ["<C-k>"] = cmp.mapping.select_prev_item(),
-        }),
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "luasnip" },
-        }, {
-            { name = "buffer" },
-          }),
-      })
 
       -- Brief aside: **What is LSP?**
       --
