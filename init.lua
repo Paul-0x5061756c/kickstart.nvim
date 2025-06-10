@@ -268,16 +268,6 @@ rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
-  -- Add nvim-cmp plugin for autocompletion
-  {
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
-      'hrsh7th/cmp-buffer',   -- Buffer source for nvim-cmp
-      'hrsh7th/cmp-path',     -- Path source for nvim-cmp
-      'hrsh7th/cmp-cmdline',  -- Command-line source for nvim-cmp
-    },
-  },
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
 
