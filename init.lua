@@ -102,7 +102,7 @@ vim.g.have_nerd_font = true
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
+vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
@@ -268,16 +268,6 @@ rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
-  -- Add nvim-cmp plugin for autocompletion
-  {
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
-      'hrsh7th/cmp-buffer',   -- Buffer source for nvim-cmp
-      'hrsh7th/cmp-path',     -- Path source for nvim-cmp
-      'hrsh7th/cmp-cmdline',  -- Command-line source for nvim-cmp
-    },
-  },
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
 
@@ -716,14 +706,14 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
-      volar = {
-          filetypes = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'vue' },
-          init_options = {
-            vue = {
-              hybridMode = false
-            }
-          }
-        },
+      -- volar = {
+      --     filetypes = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'vue' },
+      --     init_options = {
+      --       vue = {
+      --         hybridMode = false
+      --       }
+      --     }
+      --   },
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
@@ -949,6 +939,14 @@ require('lazy').setup({
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
+
+      -- remove background so that the background is transparent
+      vim.cmd [[
+        hi Normal guibg=NONE ctermbg=NONE
+        hi NormalNC guibg=NONE ctermbg=NONE
+        hi EndOfBuffer guibg=NONE ctermbg=NONE
+      ]]
+
     end,
   },
   -- Highlight todo, notes, etc in comments
