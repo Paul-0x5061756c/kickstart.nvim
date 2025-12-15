@@ -1,6 +1,7 @@
 return {
   {
     'saghen/blink.cmp',
+    build = 'cargo build --release',
     opts = {
       keymap = {
         preset = 'default',
@@ -8,6 +9,9 @@ return {
       },
       completion = {
         menu = { auto_show = true },
+      },
+      fuzzy = {
+        implementation = 'prefer_rust',
       },
     },
   },
