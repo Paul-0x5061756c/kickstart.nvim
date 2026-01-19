@@ -54,6 +54,13 @@ vim.api.nvim_create_autocmd('CursorHold', {
   end,
 })
 
+vim.diagnostic.config {
+  virtual_text = {
+    spacing = 2,
+    prefix = '●',
+  },
+}
+
 -- Terminal
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
