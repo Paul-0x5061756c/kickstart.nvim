@@ -43,6 +43,8 @@ vim.g.loaded_netrw = 1
 
 -- Diagnostics
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostic Quickfix' })
+vim.keymap.set('n', '[d', function() vim.diagnostic.jump { count = -1 } end, { desc = 'Previous diagnostic' })
+vim.keymap.set('n', ']d', function() vim.diagnostic.jump { count = 1 } end, { desc = 'Next diagnostic' })
 
 vim.api.nvim_create_autocmd('CursorHold', {
   callback = function()
@@ -65,10 +67,10 @@ vim.diagnostic.config {
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- Split movement
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>')
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>')
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>')
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>')
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move to left split' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move to right split' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move to lower split' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move to upper split' })
 
 -- Yank highlight
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -136,6 +138,21 @@ require('lazy').setup {
           end,
         },
       }
+
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('lsp-keymaps', { clear = true }),
+        callback = function(event)
+          local map = function(keys, func, desc, mode)
+            mode = mode or 'n'
+            vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+          end
+          map('K', vim.lsp.buf.hover, 'Hover Documentation')
+          map('<leader>rn', vim.lsp.buf.rename, 'Rename Symbol')
+          map('<leader>ca', vim.lsp.buf.code_action, 'Code Action', { 'n', 'x' })
+          map('gd', vim.lsp.buf.definition, 'Go to Definition')
+          map('gD', vim.lsp.buf.declaration, 'Go to Declaration')
+        end,
+      })
     end,
   },
 
