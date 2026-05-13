@@ -104,6 +104,8 @@ require('lazy').setup {
       'saghen/blink.cmp',
     },
     config = function()
+      local util = require 'lspconfig.util'
+
       local servers = {
         lua_ls = {
           settings = {
@@ -113,11 +115,14 @@ require('lazy').setup {
             },
           },
         },
-        omnisharp = {
-          cmd = { 'omnisharp', '--languageserver' },
-          filetypes = { 'cs', 'vb', 'cshtml', 'razor', 'html' },
+        csharp_ls = {
+          filetypes = { 'cs' },
+          init_options = {
+            AutomaticWorkspaceInit = true,
+          },
           root_dir = function(fname)
-            return require('lspconfig').util.root_pattern('*.sln', '*.csproj', '*.fsproj', '*.vbproj', '*.vcxproj')(fname) or vim.fn.getcwd()
+            return util.root_pattern('*.sln', '*.slnx', '*.csproj')(fname)
+              or util.path.dirname(fname)
           end,
         },
       }
