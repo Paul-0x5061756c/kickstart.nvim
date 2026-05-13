@@ -104,8 +104,6 @@ require('lazy').setup {
       'saghen/blink.cmp',
     },
     config = function()
-      local util = require 'lspconfig.util'
-
       local servers = {
         lua_ls = {
           settings = {
@@ -116,62 +114,29 @@ require('lazy').setup {
           },
         },
         omnisharp = {
-          filetypes = { 'cs' },
-          cmd = {
-            vim.fn.exepath 'OmniSharp' ~= '' and vim.fn.exepath 'OmniSharp' or 'OmniSharp',
-            '-z',
-            '--hostPID',
-            tostring(vim.fn.getpid()),
-            'DotNet:enablePackageRestore=false',
-            '--encoding',
-            'utf-8',
-            '--languageserver',
-          },
-          capabilities = {
-            workspace = {
-              workspaceFolders = false,
-            },
-          },
+          cmd = { 'omnisharp', '--languageserver' },
+          filetypes = { 'cs', 'vb', 'cshtml', 'razor', 'html' },
           root_dir = function(fname)
-            local solution_root = util.root_pattern('*.sln', '*.slnx')(fname)
-            if solution_root then
-              return solution_root
-            end
-
-            return util.root_pattern('*.csproj')(fname) or util.path.dirname(fname)
+            return require('lspconfig').util.root_pattern('*.sln', '*.csproj', '*.fsproj', '*.vbproj', '*.vcxproj')(fname) or vim.fn.getcwd()
           end,
-          settings = {
-            FormattingOptions = {
-              EnableEditorConfigSupport = true,
-            },
-            MsBuild = {
-              LoadProjectsOnDemand = false,
-            },
-            RoslynExtensionsOptions = {
-              EnableAnalyzersSupport = true,
-              EnableImportCompletion = true,
-              EnableDecompilationSupport = true,
-            },
-            Sdk = {
-              IncludePrereleases = true,
-            },
-          },
         },
       }
 
       local capabilities = require('blink.cmp').get_lsp_capabilities()
-
-      for server, opts in pairs(servers) do
-        opts.capabilities = vim.tbl_deep_extend('force', {}, capabilities, opts.capabilities or {})
-        vim.lsp.config(server, opts)
-      end
 
       require('mason-tool-installer').setup {
         ensure_installed = vim.tbl_keys(servers),
       }
 
       require('mason-lspconfig').setup {
-        automatic_enable = vim.tbl_keys(servers),
+        automatic_installation = false,
+        handlers = {
+          function(server)
+            local opts = servers[server] or {}
+            opts.capabilities = vim.tbl_deep_extend('force', {}, capabilities, opts.capabilities or {})
+            require('lspconfig')[server].setup(opts)
+          end,
+        },
       }
 
       vim.api.nvim_create_autocmd('LspAttach', {
